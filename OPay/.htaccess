@@ -1,0 +1,14 @@
+RewriteEngine On
+
+# Remove .php extension
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^([^/]+)/?$ $1.php [L]
+
+# Force trailing slash removal (optional)
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.+?)//
+RewriteRule ^ %1 [R=301,L]
+
+# Redirect index.php to domain root
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.php
+RewriteRule ^index\.php$ / [R=301,L]

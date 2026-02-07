@@ -1,0 +1,51 @@
+Array
+(
+    [0] => Array
+        (
+            [email] => ah need and I made ex a gmail.com
+            [error] => Invalid address:  (to): ah need and I made ex a gmail.com
+        )
+
+    [1] => Array
+        (
+            [email] => Yusuf Mohdibrahim53@gmail.com 
+            [error] => Invalid address:  (to): Yusuf Mohdibrahim53@gmail.com
+        )
+
+    [2] => Array
+        (
+            [email] => abdulmalik yahaya@gmail.com
+            [error] => Invalid address:  (to): abdulmalik yahaya@gmail.com
+        )
+
+    [3] => Array
+        (
+            [email] => UmuranaAbdullahi najo@gmail.com
+            [error] => Invalid address:  (to): UmuranaAbdullahi najo@gmail.com
+        )
+
+    [4] => Array
+        (
+            [email] => AUWALU MAKODA 1234@gmail.com
+            [error] => Invalid address:  (to): AUWALU MAKODA 1234@gmail.com
+        )
+
+    [5] => Array
+        (
+            [email] => ah mere and up a see a gmail.com
+            [error] => Invalid address:  (to): ah mere and up a see a gmail.com
+        )
+
+    [6] => Array
+        (
+            [email] => abeldaniel446..@gmail.com
+            [error] => Invalid address:  (to): abeldaniel446..@gmail.com
+        )
+
+    [7] => Array
+        (
+            [email] => 070sanimutala.gmail.com
+            [error] => Invalid address:  (to): 070sanimutala.gmail.com
+        )
+
+)

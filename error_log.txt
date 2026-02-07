@@ -1,0 +1,23 @@
+[17-Sep-2025 05:45:45 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'first_name' in 'SELECT' in /home/webtechnet/public_html/OPay/email_handler.php:120
+Stack trace:
+#0 /home/webtechnet/public_html/OPay/email_handler.php(120): PDO->query('SELECT id, emai...')
+#1 {main}
+  thrown in /home/webtechnet/public_html/OPay/email_handler.php on line 120
+[17-Sep-2025 05:47:43 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'first_name' in 'SELECT' in /home/webtechnet/public_html/OPay/email_handler.php:120
+Stack trace:
+#0 /home/webtechnet/public_html/OPay/email_handler.php(120): PDO->query('SELECT id, emai...')
+#1 {main}
+  thrown in /home/webtechnet/public_html/OPay/email_handler.php on line 120
+[17-Sep-2025 05:54:37 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'first_name' in 'SELECT' in /home/webtechnet/public_html/OPay/email_handler.php:120
+Stack trace:
+#0 /home/webtechnet/public_html/OPay/email_handler.php(120): PDO->query('SELECT id, emai...')
+#1 {main}
+  thrown in /home/webtechnet/public_html/OPay/email_handler.php on line 120
+[17-Sep-2025 05:57:32 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'first_name' in 'SELECT' in /home/webtechnet/public_html/OPay/email_handler.php:120
+Stack trace:
+#0 /home/webtechnet/public_html/OPay/email_handler.php(120): PDO->query('SELECT id, emai...')
+#1 {main}
+  thrown in /home/webtechnet/public_html/OPay/email_handler.php on line 120
+[17-Sep-2025 08:03:05 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/webtechnet/public_html/OPay/email_handler.php:7) in /home/webtechnet/public_html/OPay/email_handler.php on line 63
+[17-Sep-2025 08:04:11 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/webtechnet/public_html/OPay/email_handler.php:7) in /home/webtechnet/public_html/OPay/email_handler.php on line 63
+[17-Sep-2025 08:04:24 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/webtechnet/public_html/OPay/email_handler.php:7) in /home/webtechnet/public_html/OPay/email_handler.php on line 63

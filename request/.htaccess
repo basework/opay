@@ -1,0 +1,5 @@
+RewriteEngine On
+
+# Block direct access to everything in this folder
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^.*$ /index.php [L,R=302]
