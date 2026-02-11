@@ -1,19 +1,17 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "functions": {
-    "api/**/*.php": {
-      "runtime": "php-8.2"
-    },
-    "**.php": {
-      "runtime": "php-8.2"
-    }
-  },
+  "builds": [
+    { "src": "**.php", "use": "now-php@2.0.0" },
+    { "src": "**.html", "use": "@vercel/static" },
+    { "src": "js/**", "use": "@vercel/static" },
+    { "src": "css/**", "use": "@vercel/static" },
+    { "src": "images/**", "use": "@vercel/static" }
+  ],
   "routes": [
+    { "src": "/(.*\\.php)$", "dest": "/$1" },
     { "src": "/js/(.*)", "dest": "/js/$1" },
     { "src": "/css/(.*)", "dest": "/css/$1" },
     { "src": "/images/(.*)", "dest": "/images/$1" },
-    { "src": "/(.*\\.php)$", "dest": "/$1" },
     { "src": "/(.*)", "dest": "/index.php" }
   ]
 }
