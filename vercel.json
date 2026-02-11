@@ -1,4 +1,4 @@
 {
   "version": 2,
-  "framework": null
+  "runtime": "php:8.2"
 }
