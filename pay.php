@@ -77,22 +77,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['receipt'])) {
     $allowTypes = ['jpg','png','jpeg','gif','pdf'];
     
     if (in_array(strtolower($fileType), $allowTypes)) {
-        if (move_uploaded_file($_FILES["receipt"]["tmp_name"], $targetFilePath)) {
+            if (move_uploaded_file($_FILES["receipt"]["tmp_name"], $targetFilePath)) {
             try {
                 // Generate unique request_id
                 $request_id = generateRequestID(20);
-                
+
+                // Determine image URL. If Supabase storage is configured, upload there and use public URL.
+                $imageUrl = '';
+                if (getenv('SUPABASE_URL') && getenv('SUPABASE_SERVICE_ROLE_KEY') && getenv('SUPABASE_BUCKET_NAME')) {
+                    require_once __DIR__ . '/supabase_storage.php';
+                    try {
+                        $remotePath = 'receipts/' . $fileName;
+                        $imageUrl = supabase_upload_file($targetFilePath, $remotePath);
+                        // remove local copy after successful upload
+                        if (file_exists($targetFilePath)) {
+                            @unlink($targetFilePath);
+                        }
+                    } catch (Exception $e) {
+                        // If storage upload fails, return error to client
+                        echo json_encode(["status" => false, "message" => "Storage upload failed: " . $e->getMessage()]);
+                        // cleanup local file
+                        if (file_exists($targetFilePath)) {@unlink($targetFilePath);} 
+                        exit();
+                    }
+                } else {
+                    // Build image URL from BASE_URL env var when available (fallback to original behavior)
+                    $base = getenv('BASE_URL') ?: '';
+                    if ($base) {
+                        $imageUrl = rtrim($base, '/') . '/request/' . $fileName;
+                    } else {
+                        $imageUrl = "https://webtech.net.ng/OPay/request/" . $fileName;
+                    }
+                }
+
                 $sql = "INSERT INTO payment_requests (request_id, uid, name, number, email, image, date, plan, status) 
                         VALUES (:request_id, :uid, :name, :number, :email, :image, NOW(), :plan, 'pending')";
                 $stmt = $pdo->prepare($sql);
-                // Build image URL from BASE_URL env var when available
-                $base = getenv('BASE_URL') ?: '';
-                if ($base) {
-                    $imageUrl = rtrim($base, '/') . '/request/' . $fileName;
-                } else {
-                    $imageUrl = "https://webtech.net.ng/OPay/request/" . $fileName;
-                }
-
                 $stmt->execute([
                     ':request_id' => $request_id,
                     ':uid' => $_SESSION['user_id'],
@@ -102,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['receipt'])) {
                     ':image' => $imageUrl,
                     ':plan' => $plan
                 ]);
-                
+
                 echo json_encode(["status" => true, "message" => "Image uploaded successfully"]);
                 exit();
             } catch (PDOException $e) {
