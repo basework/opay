@@ -39,12 +39,24 @@ if (!move_uploaded_file($_FILES['profile']['tmp_name'], $destPath)) {
     echo json_encode(['ok'=>false,'error'=>'Failed to save file']); exit;
 }
 
-// Build absolute URL as requested
-$BASE_URL = 'https://web404space.com/opay';
-$fileUrl  = $BASE_URL . '/profile/' . $filename;
+// Try Supabase upload when env vars present
+try {
+    if (getenv('SUPABASE_URL') && getenv('SUPABASE_SERVICE_ROLE_KEY') && getenv('SUPABASE_BUCKET_NAME')) {
+        require_once __DIR__ . '/supabase_storage.php';
+        $remotePath = 'profiles/' . $filename;
+        $fileUrl = supabase_upload_file($destPath, $remotePath);
+        // Optionally remove local file
+        @unlink($destPath);
+    } else {
+        $base = getenv('BASE_URL') ?: 'https://web404space.com/opay';
+        $fileUrl = rtrim($base, '/') . '/profile/' . $filename;
+    }
 
-// Update DB
-$stmt = $pdo->prepare("UPDATE users SET profile=? WHERE uid=?");
-$stmt->execute([$fileUrl, $uid]);
+    // Update DB
+    $stmt = $pdo->prepare("UPDATE users SET profile=? WHERE uid=?");
+    $stmt->execute([$fileUrl, $uid]);
 
-echo json_encode(['ok'=>true, 'url'=>$fileUrl]);
+    echo json_encode(['ok'=>true, 'url'=>$fileUrl]);
+} catch (Exception $e) {
+    echo json_encode(['ok'=>false,'error'=>'Upload failed: ' . $e->getMessage()]);
+}

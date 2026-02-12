@@ -85,13 +85,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['receipt'])) {
                 $sql = "INSERT INTO payment_requests (request_id, uid, name, number, email, image, date, plan, status) 
                         VALUES (:request_id, :uid, :name, :number, :email, :image, NOW(), :plan, 'pending')";
                 $stmt = $pdo->prepare($sql);
+                // Build image URL from BASE_URL env var when available
+                $base = getenv('BASE_URL') ?: '';
+                if ($base) {
+                    $imageUrl = rtrim($base, '/') . '/request/' . $fileName;
+                } else {
+                    $imageUrl = "https://webtech.net.ng/OPay/request/" . $fileName;
+                }
+
                 $stmt->execute([
                     ':request_id' => $request_id,
                     ':uid' => $_SESSION['user_id'],
                     ':name' => $userName,
                     ':number' => $userPhone,
                     ':email' => $userEmail,
-                    ':image' => "https://webtech.net.ng/OPay/request/" . $fileName,
+                    ':image' => $imageUrl,
                     ':plan' => $plan
                 ]);
                 
